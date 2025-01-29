@@ -5,29 +5,24 @@ import '../services/news_service.dart';
 class NewsController extends GetxController {
   var isLoading = false.obs;
   var articles = <Article>[].obs;
-  var categories = ["Technology", "Sports", "Entertainment"].obs;
+  var page = 1.obs;
 
-  int currentPage = 1;
+  final NewsService _newsService = NewsService();
 
   void fetchNews(String category) async {
     isLoading(true);
     try {
-      final newsData = await ApiService.fetchNews(category, currentPage);
-      if (currentPage == 1) {
-        articles.assignAll(newsData.articles);
-      } else {
-        articles.addAll(newsData.articles);
-      }
+      var fetchedArticles = await _newsService.fetchNews(category, page.value);
+      articles.addAll(fetchedArticles);
     } catch (e) {
-      Get.snackbar('Error', e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Error", e.toString());
     } finally {
       isLoading(false);
     }
   }
 
   void loadMore(String category) {
-    currentPage++;
+    page.value++;
     fetchNews(category);
   }
 }
