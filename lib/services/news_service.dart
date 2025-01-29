@@ -8,8 +8,12 @@ class NewsService {
 
   Future<List<Article>> fetchNews(String category, int page) async {
     final url = "$baseUrl?q=$category&page=$page&apiKey=$apiKey";
+
+    print('uri____ ${url}');
     final response = await http.get(Uri.parse(url));
 
+    print('response body ${response.body}');
+    print('status code  ${response.statusCode}');
     if (response.statusCode == 200) {
       return NewsArticle.fromJson(json.decode(response.body)).articles;
     } else {
