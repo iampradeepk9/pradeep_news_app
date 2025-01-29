@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'news_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<String> categories = ["Technologies", "Sports", "Entertainments"];
+  final List<String> categories = ["Technology", "Sports", "Entertainment"];
 
   @override
   Widget build(BuildContext context) {
